@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import springrest.springrest.models.PersonModel;
 import springrest.springrest.services.PersonService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -14,36 +15,32 @@ public class PersonController {
     @Autowired
     private PersonService service;
 
-    @RequestMapping(method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PersonModel> findAll() {
         return service.findAll();
     }
 
-    @RequestMapping(value = "/{id}",
-            method=RequestMethod.GET,
+    @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonModel findById(@PathVariable(value = "id") String id) {
+    public PersonModel findById(@PathVariable(value = "id") Long id) {
         return service.findById(id);
     }
 
-    @RequestMapping(method=RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonModel create(@RequestBody PersonModel person) {
         return service.create(person);
     }
 
-    @RequestMapping(method=RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonModel update(@RequestBody PersonModel person) {
         return service.update(person);
     }
 
 
-    @RequestMapping(value = "/{id}",
-            method=RequestMethod.DELETE)
-    public void delete(@PathVariable(value = "id") String id) {
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable(value = "id") Long id) {
         service.delete(id);
     }
 }
